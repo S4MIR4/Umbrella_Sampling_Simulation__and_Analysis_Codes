@@ -1,0 +1,28 @@
+```
+When you pull a molecule or complex (like a protofibril) along a particular direction:
+Avoid interactions with periodic images
+PBC “wraps” the system, so atoms on one edge can interact with atoms on the opposite edge.
+To avoid this, your box length along the pulling direction must be at least twice the pulling distance.
+Pull distance < 1/2 box length
+If the pull distance exceeds half the box length, the minimum image convention causes GROMACS to calculate the distance incorrectly (it will “wrap around” the box).
+So if you want to pull 5 nm, your box along that axis should be at least 10 nm.
+Place your molecule off-center
+This ensures that there is enough space in the pulling direction for the molecule to move without hitting the box edge.
+
+How to calculate box size
+Let’s define variables:
+d_pull = total pulling distance (nm)
+L_box = box length along pulling direction (nm)
+
+minimum requirement: L_box >= 2 x d_pull
+
+
+Example:
+Pull distance = 5.0 nm
+Box length = 12.0 nm  (greater than 2 × 5 = 10 nm)
+This extra space (12 − 5 = 7 nm) allows the protofibril to sit away from the edge, so you can place its center of mass somewhere in the box (not at 0 or at the maximum coordinate) to allow a full pull.
+```
+
+
+````bash
+gmx editconf -f complex.gro -o newbox.gro -center 3.280 2.181 2.4775 -box 6.560 4.362 12
