@@ -38,18 +38,22 @@ Start with the bound state (ligand close to receptor).
 Slowly "pull" the ligand away along one axis (reaction coordinate = COM distance).
 Save multiple snapshots (configurations) at different distances.
 These snapshots are the starting points for umbrella windows.
+
 2.Extract Frames (Window Setup)
 From the pulling trajectory, select frames spaced at regular COM intervals (e.g., every 0.1–0.2 nm).
 Each frame will become an umbrella window.
+
 3.Umbrella Sampling Simulations (Biased MD)
 For each window, apply a harmonic restraint to keep the ligand near that specific COM distance.
 This restraint is called the umbrella bias — it ensures good sampling in regions the ligand wouldn’t naturally visit often.
 Multiple windows are run, covering the whole reaction coordinate (from bound to unbound).
 Overlap is essential: neighboring windows should have some overlap in sampled positions so data can be stitched smoothly.
+
 4.Reconstruct PMF with WHAM
 All the biased simulations generate histograms of sampled positions.
 These histograms are combined using the Weighted Histogram Analysis Method (WHAM).
 WHAM removes the effect of the bias and reconstructs the unbiased free energy profile (PMF).
+
 -Results:
 The PMF curve shows the free energy landscape as the ligand moves away from the binding site.
 The difference in free energy between the bound and unbound states gives the binding free energy ΔG_bind.
