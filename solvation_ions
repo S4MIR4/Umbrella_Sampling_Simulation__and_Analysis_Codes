@@ -2,8 +2,10 @@
 first add water:
 
 gmx solvate -cp newbox.gro -cs spc216.gro -o solv.gro -p topol.top
+
 ```
 Next, add ions:
+
 ```
 ; ions.mdp - used as input into grompp to generate ions.tpr
 ; Parameters describing what to do, when to stop and what to save
@@ -21,9 +23,11 @@ coulombtype     = cutoff    ; Treatment of long range electrostatic interactions
 rcoulomb        = 1.4       ; Short-range electrostatic cut-off
 rvdw            = 1.4       ; Short-range Van der Waals cut-off
 pbc             = xyz       ; Periodic Boundary Conditions
+
 ```
 
-````bash
+```bash
+
 gmx grompp -f ions.mdp -c solv.gro -p topol.top -o ions.tpr
 
 gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral -conc 0.1
